@@ -20,7 +20,8 @@ function handleClick() {
         username: usernameInput.value,
         password: passwordInput.value
     };
-    xhr.send(JSON.stringify(data));
+    var jsonData = JSON.stringify(data)
+    xhr.send(jsonData);
 }
 
 signupButton.addEventListener("click", handleClick)

@@ -4,7 +4,7 @@ const mysql = require('mysql2')
 const path = require('path');
 const PORT= process.env.PORT ||  6969
 
-const {saveUser} = require("./controllers/controller")
+const {signup, login} = require("./controllers/controller")
 
 
 
@@ -14,6 +14,8 @@ const server = http.createServer((req, res) => {
     let changePage = 'change'
     if (req.url === '/signup' && req.method === 'GET') {
         filePath = "./templates/signup.html"
+    } else if (req.url === '/login' && req.method === 'GET') {
+        filePath = "./templates/login.html"
     } else if (req.url === '/signup' && req.method === 'POST') {
         changePage = ''
         let body = ''
@@ -23,7 +25,18 @@ const server = http.createServer((req, res) => {
         })
         req.on('end', () => {
             let parsedData = JSON.parse(body)
-            saveUser(req, res, parsedData)
+            signup(req, res, parsedData)
+        })
+    } else if (req.url === '/login' && req.method === 'POST') {
+        changePage = ''
+        let body = ''
+        req.on('data', (chunk) => {
+            console.log(`Received chunk: ${chunk}`);
+            body += chunk.toString()
+        })
+        req.on('end', () => {
+            let parsedData = JSON.parse(body)
+            login(req, res, parsedData)
         })
     }
     // if (filePath === './') {

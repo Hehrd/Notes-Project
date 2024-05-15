@@ -15,32 +15,46 @@ db.connect((err) => {
 async function saveUser (username, password){
     return new Promise((resolve, reject) => {
         let sql = `SELECT * FROM users WHERE username='${username}'`
-        db.query(sql, (err, result) => {
+        let query = db.query(sql, (err, results) => {
             if (err) {
                 reject(err)
-            }
-            if (result[0].username == username) {
-                reject(err)
+            } else if (results.length > 0) {
+                reject(new Error("Username is already taken!"))
             } else {
                 sql = `INSERT INTO users (username, password_hash) VALUES ('${username}', '${password}')`
+                query = db.query(sql, (err, result) => {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        resolve(results)
+                    }
+                })
             }
-        })
 
-        db.query(sql, (err, result) => {
-            if (err) {
-                reject(err)
-            }
         })
 
         let newUser = {
             username: username,
             password: password
         }
-        resolve(newUser)
     })
+}
 
+async function login(username, password){
+    return new Promise((resolve, reject) => {
+        let sql = `SELECT * FROM users WHERE username='${username}' AND password_hash='${password}'`
+        let query = db.query(sql, (err, results) => {
+            if (err) {
+                reject(err)
+            } else if (results.length < 1) {
+                reject(new Error("Invalid username or password"))
+            } else {
+                resolve(results)
+            }
+        })
+    })
 }
 
 module.exports = {
-    saveUser
+    saveUser, login
 }

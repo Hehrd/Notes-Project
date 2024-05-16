@@ -8,10 +8,12 @@ async function saveUser(req, res, credentials) {
             username: username,
             password: password
         }
-        let newUser = Service.saveUser(username, password)
+        await Service.saveUser(username, password)
         res.writeHead(201, {'Content-Type': 'application/json'})
-        res.end(JSON.stringify(user))
+        res.end("New user created!")
     } catch (error) {
+        res.writeHead(409, {'Content-Type': 'application/json'})
+        res.end("Username already exists!")
         console.log(error)
     }
 

@@ -23,7 +23,7 @@ const server = http.createServer((req, res) => {
         })
         req.on('end', () => {
             let parsedData = JSON.parse(body)
-            saveUser(req, res, body)
+            saveUser(req, res, parsedData)
         })
     }
     // if (filePath === './') {

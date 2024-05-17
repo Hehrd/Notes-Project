@@ -34,10 +34,10 @@ footer {
 }
 
 #drop-zone {
-	width: 200px;
-	height: 200px;
+	width: 500px;
+	height: 400px;
 	margin-left: 200px;
-	background-color: #ccc;
+	background-color: #cccccc88;
 }
 
 #note {

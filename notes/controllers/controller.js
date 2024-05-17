@@ -51,10 +51,10 @@ async function createNewNote(req, res, content){
     try {
         let text = content.text
         let type = content.type
-        let userID = content.username
-        await Service.saveNote(text, type, userID)
+        let username = content.username
+        await Service.saveNote(text, type, username)
         res.writeHead(201, {'Content-Type' : 'application/json'})
-        res.end('New note created successfully!')
+        res.end('test')
     } catch (err) {
         if (err.message === 'Invalind note contents!') {
             res.writeHead(422, {'Content-Type' : 'application/json'})

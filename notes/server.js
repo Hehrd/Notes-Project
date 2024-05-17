@@ -16,6 +16,8 @@ const server = http.createServer((req, res) => {
         filePath = "./templates/signup.html"
     } else if (req.url === '/login' && req.method === 'GET') {
         filePath = "./templates/login.html"
+    } else if (req.url === '/homepage' && req.method === 'GET') {
+        filePath = './templates/homepage.html'
     } else if (req.url === '/signup' && req.method === 'POST') {
         changePage = ''
         let body = ''

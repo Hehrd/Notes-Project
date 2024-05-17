@@ -10,7 +10,9 @@ function handleClick() {
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.onload = function () {
         if (xhr.status === 201) {  // The server responded with a successful status
+            sessionStorage.setItem('notes_username', `${usernameInput.value}`)
             console.log('Success:', xhr.responseText);
+            window.location.href = '/homepage'
         } else {
             console.log('Error:', xhr.status, xhr.statusText);
         }

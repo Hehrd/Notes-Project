@@ -51,8 +51,8 @@ async function createNewNote(req, res, content){
     try {
         let text = content.text
         let type = content.type
-        let userID = content.userID
-        await Service.saveNote(text, type, userID)
+        let userID = content.username
+        await Service.saveNote(text, type, username)
         res.writeHead(201, {'Content-Type' : 'application/json'})
         res.end('New note created successfully!')
     } catch (err) {
@@ -66,7 +66,7 @@ async function createNewNote(req, res, content){
     }
 }
 
-async function loadNotes(req, res, userID) {
+async function loadNotes(req, res, username) {
     try {
         await Service.loadNotes(userID)
         res.writeHead(200, {'Content-Type' : 'application/json'})

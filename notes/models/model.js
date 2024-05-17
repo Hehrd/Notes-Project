@@ -55,9 +55,9 @@ async function login(username, password){
     })
 }
 
-async function saveNote(text, type, userID){
+async function saveNote(text, type, username){
     return new Promise((resolve, reject) => {
-        let sql = `INSERT INTO notes (note_text, note_type, userID) VALUES ('${text}', '${type}', ${userID})`
+        let sql = `INSERT INTO notes (note_text, note_type, username) VALUES ('${text}', '${type}', ${username})`
         let query = db.query(sql, (err, results) => {
             if (err) {
                 reject(err)
@@ -74,9 +74,9 @@ async function saveNote(text, type, userID){
     })
 }
 
-async function loadNotes(userID) {
+async function loadNotes(username) {
     return new Promise((resolve, reject) => {
-        let sql = `SELECT * FROM notes WHERE userID=${userID}`
+        let sql = `SELECT * FROM notes WHERE username=${username}`
         let query = db.query(sql, (err, results) => {
             if (err) {
                 reject(err)

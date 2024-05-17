@@ -47,6 +47,37 @@ async function login(req, res, credentials){
     }
 }
 
+async function createNewNote(req, res, content){
+    try {
+        let text = content.text
+        let type = content.type
+        let userID = content.userID
+        await Service.saveNote(text, type, userID)
+        res.writeHead(201, {'Content-Type' : 'application/json'})
+        res.end('New note created successfully!')
+    } catch (err) {
+        if (err.message === 'Invalind note contents!') {
+            res.writeHead(422, {'Content-Type' : 'application/json'})
+            res.end(err.message)
+        } else {
+            res.writeHead(500, {'Content-Type' : 'application/json'})
+            res.end('Internal server error!')
+        }
+    }
+}
+
+async function loadNotes(req, res, userID) {
+    try {
+        await Service.loadNotes(userID)
+        res.writeHead(200, {'Content-Type' : 'application/json'})
+        res.end('Notes loaded successfully!')
+    } catch (err) {
+        res.writeHead(500, {'Content-Type' : 'application/json'})
+        res.end('Internal server error!')
+    }
+
+}
+
 module.exports = {
-    saveUser: signup, login
+    signup, login, createNewNote, loadNotes
 }

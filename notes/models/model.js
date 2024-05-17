@@ -55,6 +55,38 @@ async function login(username, password){
     })
 }
 
+async function saveNote(text, type, userID){
+    return new Promise((resolve, reject) => {
+        let sql = `INSERT INTO notes (note_text, note_type, userID) VALUES ('${text}', '${type}', ${userID})`
+        let query = db.query(sql, (err, results) => {
+            if (err) {
+                reject(err)
+            } else switch (type) {
+                case 1: resolve(results)
+                    break;
+                case 2: resolve(results)
+                    break
+                case 3: resolve(results)
+                    break
+                default: reject(new Error('Invalid note contents!'))
+            }
+        })
+    })
+}
+
+async function loadNotes(userID) {
+    return new Promise((resolve, reject) => {
+        let sql = `SELECT * FROM notes WHERE userID=${userID}`
+        let query = db.query(sql, (err, results) => {
+            if (err) {
+                reject(err)
+            } else {
+                resolve(results)
+            }
+        })
+    })
+}
+
 module.exports = {
-    saveUser, login
+    saveUser, login, saveNote, loadNotes
 }

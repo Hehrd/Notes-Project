@@ -4,7 +4,7 @@ const mysql = require('mysql2')
 const path = require('path');
 const PORT= process.env.PORT ||  6969
 
-const {signup, login} = require("./controllers/controller")
+const {signup, login, createNewNote} = require("./controllers/controller")
 
 
 
@@ -37,6 +37,17 @@ const server = http.createServer((req, res) => {
         req.on('end', () => {
             let parsedData = JSON.parse(body)
             login(req, res, parsedData)
+        })
+    } else if (req.url === '/createnote' && req.method === 'POST') {
+        changePage = ''
+        let body = ''
+        req.on('data', (chunk) => {
+            console.log(`Received chunk: ${chunk}`);
+            body += chunk.toString()
+        })
+        req.on('end', () => {
+            let parsedData = JSON.parse(body)
+            createNewNote((req, res, parsedData))
         })
     }
     // if (filePath === './') {

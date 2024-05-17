@@ -52,7 +52,7 @@ async function createNewNote(req, res, content){
         let text = content.text
         let type = content.type
         let userID = content.username
-        await Service.saveNote(text, type, username)
+        await Service.saveNote(text, type, userID)
         res.writeHead(201, {'Content-Type' : 'application/json'})
         res.end('New note created successfully!')
     } catch (err) {
@@ -66,7 +66,7 @@ async function createNewNote(req, res, content){
     }
 }
 
-async function loadNotes(req, res, username) {
+async function loadNotes(req, res, userID) {
     try {
         await Service.loadNotes(userID)
         res.writeHead(200, {'Content-Type' : 'application/json'})
@@ -76,6 +76,14 @@ async function loadNotes(req, res, username) {
         res.end('Internal server error!')
     }
 
+}
+
+async function deleteNote(username, noteID){
+    try {
+        await Service.deleteNote(userID, noteID)
+    } catch (err) {
+
+    }
 }
 
 module.exports = {

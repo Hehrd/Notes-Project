@@ -1,7 +1,7 @@
 
 const note = document.getElementById('note');
 const dropZone = document.getElementById('drop-zone');
-card.addEventListener('dragstart', function(event) {
+note.addEventListener('dragstart', function(event) {
 	console.log(event)
 })
 dropZone.addEventListener('dragover', function(event) {

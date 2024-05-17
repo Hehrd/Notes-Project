@@ -27,3 +27,34 @@ footer {
     width: 100%;
     background-color: lawngreen;
 }
+
+.notesbox {
+	display: flex;
+	flex-direction: row;
+}
+
+#drop-zone {
+	width: 200px;
+	height: 200px;
+	margin-left: 200px;
+	background-color: #ccc;
+}
+
+#note {
+	width: 180px;
+	height: 80px;
+	background-color:rgb(107, 205, 50);
+	border: 1px solid #ccc;
+	border-radius: 15px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+    margin-left:3px;
+}
+#note input[type="text"] {
+    width: 100%;
+    padding: 5px;
+    border-radius: 10px;
+    margin: 7px;
+    font-size: 20px;
+}

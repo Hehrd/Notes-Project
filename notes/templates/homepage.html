@@ -8,10 +8,14 @@
 </head>
 <body>
     <header><h1>Your Notes</h1></header>
-<main>
-    
-    <!--Have to put smth in main,but this is just a test-->
-</main>   
+    <div class="container">
+		<div id="note" draggable="true">
+			<input type="text" class="label" id="note-input" name="note" placeholder="New note" onfocus="clearPlaceholder(this)">
+		</div>
+		<div id="drop-zone">
+        </div>
+	</div>
     <footer><p class="pfooter">Have a successful day!</p></footer>
+    <script src="homepage.js" defer></script>
 </body>    
 </html>

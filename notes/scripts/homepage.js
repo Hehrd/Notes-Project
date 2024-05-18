@@ -31,6 +31,7 @@ const newNotesContainer = document.getElementById('newNotes-container')
 const generalZone = document.getElementById('drop-zone1');
 const pendingZone = document.getElementById('drop-zone2');
 const doneZone = document.getElementById('drop-zone3');
+const deleteZone = document.getElementById('drop-zone4')
 const originalNote = document.getElementById('note0')
 
 let currID = sessionStorage.getItem('newNoteID')
@@ -47,6 +48,10 @@ pendingZone.addEventListener('dragover', function(event) {
 	event.preventDefault()
 })
 doneZone.addEventListener('dragover', function(event) {
+	event.preventDefault()
+})
+
+deleteZone.addEventListener('dragover', function(event) {
 	event.preventDefault()
 })
 generalZone.addEventListener('drop', function(event) {
@@ -90,6 +95,15 @@ doneZone.addEventListener('drop', function(event) {
 		sendUpdateNoteRequest(JSON.parse(labelText), 3, note)
 	}
 })
+
+deleteZone.addEventListener('drop', function(event) {
+	let note = selectedNote
+	let username = sessionStorage.getItem('notes_username')
+	let noteID = selectedNote.querySelector('label').textContent
+	sendDeleteNoteRequest(username, noteID)
+	selectedNote.remove()
+})
+
 function sendCreateNewNoteRequest(typeId, note) {
 	var xhr = new XMLHttpRequest();
 	var url = "/createnote";
@@ -175,4 +189,20 @@ function generateLoadedNote(noteID, text, type) {
 	} else if (type === 3) {
 		doneZone.prepend(loadedNoteDiv)
 	}
+}
+
+function sendDeleteNoteRequest(username, noteID) {
+	var xhr = new XMLHttpRequest();
+	var url = `/deletenote/${username}/${noteID}`;
+
+	xhr.open("DELETE", url, true);
+	xhr.setRequestHeader("Content-Type", "application/json");
+	xhr.onload = function () {
+		if (xhr.status === 200) {  // The server responded with a successful status
+			console.log('Success:', xhr.responseText);
+		} else {
+			console.log('Error:', xhr.status, xhr.statusText);
+		}
+	}
+	xhr.send();
 }

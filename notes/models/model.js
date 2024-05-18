@@ -112,6 +112,19 @@ async function updateNote(text, type, noteID, username) {
     })
 }
 
+async function deleteNote(username, noteID) {
+    return new Promise((resolve, reject) => {
+        let sql = `DELETE FROM notes WHERE username='${username}' AND noteID=${noteID}`
+        let query = db.query(sql, (err, results) => {
+            if (err) {
+                reject(err)
+            } else {
+                resolve(results)
+            }
+        })
+    })
+}
+
 module.exports = {
-    saveUser, login, saveNote, loadNotes, updateNote
+    saveUser, login, saveNote, loadNotes, updateNote, deleteNote
 }

@@ -78,11 +78,16 @@ async function loadNotes(req, res, username) {
 
 }
 
-async function deleteNote(username, noteID){
+async function deleteNote(req, res, noteData){
     try {
-        await Service.deleteNote(userID, noteID)
+        let username = noteData.username
+        let noteID = noteData.noteID
+        await Service.deleteNote(username, Number(noteID))
+        res.writeHead(200, {'Content-Type' : 'application/json'})
+        res.end('Note successfully deleted!')
     } catch (err) {
-
+        res.writeHead(500, {'Content-Type' : 'application/json'})
+        res.end('Internal server error!')
     }
 }
 
@@ -107,5 +112,5 @@ async function updateNote(req, res, contents){
 }
 
 module.exports = {
-    signup, login, createNewNote, loadNotes, updateNote
+    signup, login, createNewNote, loadNotes, updateNote, deleteNote
 }

@@ -4,8 +4,8 @@ const mysql = require('mysql2')
 const path = require('path');
 const PORT= process.env.PORT ||  6969
 
-const {signup, login, createNewNote, updateNote, loadNotes} = require("./controllers/controller")
-
+const {signup, login, createNewNote, updateNote, loadNotes, deleteNote} = require("./controllers/controller")
+const deleteNoteRegex = /\/deletenote\/(\w+)\/(\d+)/
 
 
 const server = http.createServer((req, res) => {
@@ -73,6 +73,13 @@ const server = http.createServer((req, res) => {
             let parsedData = JSON.parse(body)
             loadNotes(req, res, parsedData)
         })
+    } else if (deleteNoteRegex.test(req.url) && req.method === 'DELETE') {
+        changePage = ''
+        let noteData = {
+            username: req.url.match(deleteNoteRegex)[1],
+            noteID: req.url.match(deleteNoteRegex)[2]
+        }
+        deleteNote(req, res, noteData)
     }
     // if (filePath === './') {
     //     filePath = './templates/index.html'; // Homepage

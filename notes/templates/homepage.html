@@ -8,15 +8,22 @@
 </head>
 <body>
     <header><h1>Your Notes</h1></header>
-    <div class="container">
-		<div id="note" draggable="true">
-            <label></label>
-			<input type="text" class="label" id="note-input" name="note" placeholder="New note">
-		</div>
-		<div id="drop-zone">
+    <div id="newNotes-container">
+        <div id="note0" class="note" draggable="true">
+            <label>New note</label>
+            <input type="text" class="label" id="note-input" name="note" placeholder="New note">
+        </div>
+    </div>
+
+    <div class="notesbox">
+		<div id="drop-zone1" class="dropzone"><label>General:</label>
+        </div>
+        <div id="drop-zone2" class="dropzone"><label>Pending:</label>
+        </div>
+        <div id="drop-zone3" class="dropzone"><label>Done:</label>
         </div>
 	</div>
     <footer><p class="pfooter">Have a successful day!</p></footer>
-    <script src="../scripts/homepage.js"></script>
-</body>
+    <script src="../scripts/homepage.js" defer></script>
+</body>    
 </html>

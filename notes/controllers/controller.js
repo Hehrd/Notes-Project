@@ -47,14 +47,14 @@ async function login(req, res, credentials){
     }
 }
 
-async function createNewNote(req, res, content){
+async function createNewNote(req, res, contents){
     try {
-        let text = content.text
-        let type = content.type
-        let username = content.username
-        await Service.saveNote(text, type, username)
+        let text = contents.text
+        let type = contents.type
+        let username = contents.username
+        const noteID = await Service.saveNote(text, type, username)
         res.writeHead(201, {'Content-Type' : 'application/json'})
-        res.end('test')
+        res.end(JSON.stringify(noteID))
     } catch (err) {
         if (err.message === 'Invalind note contents!') {
             res.writeHead(422, {'Content-Type' : 'application/json'})
@@ -86,6 +86,26 @@ async function deleteNote(username, noteID){
     }
 }
 
+async function updateNote(req, res, contents){
+    try {
+        let text = contents.text
+        let type = JSON.parse(contents.type)
+        let noteID = JSON.parse(contents.noteID)
+        let username = contents.username
+        await Service.updateNote(text, type, noteID, username)
+        res.writeHead(200, {'Content-Type' : 'application/json'})
+        res.end('Note successfully updated!')
+    } catch (err) {
+        if (err.message === "Note doesn't exist!") {
+            res.writeHead(404, {'Content-Type' : 'application/json'})
+            res.end(err.message)
+        } else {
+            res.writeHead(500, {'Content-Type' : 'application/json'})
+            res.end('Internal server error!')
+        }
+    }
+}
+
 module.exports = {
-    signup, login, createNewNote, loadNotes
+    signup, login, createNewNote, loadNotes, updateNote
 }

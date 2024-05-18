@@ -63,11 +63,13 @@ async function saveNote(text, type, username){
                 reject(err)
             } else if (type === 1) {
                 console.log(JSON.stringify(results))
-                resolve(results)
+                resolve(results.insertId)
             } else if (type === 2) {
-                resolve(results)
+                console.log(JSON.stringify(results))
+                resolve(results.insertId)
             } else if (type === 3) {
-                resolve(results)
+                console.log(JSON.stringify(results))
+                resolve(results.insertId)
             } else if(type != 1 && type != 2 && type != 3){
                 reject(new Error('Invalid note contents!'))
             }
@@ -88,6 +90,28 @@ async function loadNotes(username) {
     })
 }
 
+async function updateNote(text, type, noteID, username) {
+    return new Promise((resolve, reject) => {
+        let sql = `SELECT * FROM notes WHERE noteID='${noteID}' AND username='${username}'`
+        let query = db.query(sql, (err, results) => {
+            if (err) {
+                reject(err)
+            } else if (results.length < 1) {
+                reject(new Error("Note doesn't exist!"))
+            } else {
+                sql = `UPDATE notes SET note_text='${text}', note_type=${type} WHERE noteID=${noteID}`
+                query = db.query(sql, (err, results) => {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        resolve(noteID)
+                    }
+                })
+            }
+        })
+    })
+}
+
 module.exports = {
-    saveUser, login, saveNote, loadNotes
+    saveUser, login, saveNote, loadNotes, updateNote
 }

@@ -1,6 +1,6 @@
-let usernameInput = document.getElementById("username-input")
-let passwordInput = document.getElementById("password-input")
-let signupButton = document.getElementById("signup-button")
+const usernameInput = document.getElementById("username-input")
+const passwordInput = document.getElementById("password-input")
+const signupButton = document.getElementById("signup-button")
 
 function handleClick() {
     var xhr = new XMLHttpRequest();
@@ -11,6 +11,7 @@ function handleClick() {
     xhr.onload = function () {
         if (xhr.status === 201) {  // The server responded with a successful status
             sessionStorage.setItem('notes_username', `${usernameInput.value}`)
+            sessionStorage.setItem('newNoteID', '0')
             console.log('Success:', xhr.responseText);
             window.location.href = '/homepage'
         } else {

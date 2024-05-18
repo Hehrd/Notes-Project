@@ -66,11 +66,11 @@ async function createNewNote(req, res, contents){
     }
 }
 
-async function loadNotes(req, res, userID) {
+async function loadNotes(req, res, username) {
     try {
-        await Service.loadNotes(userID)
+        let loadedNotes = await Service.loadNotes(username)
         res.writeHead(200, {'Content-Type' : 'application/json'})
-        res.end('Notes loaded successfully!')
+        res.end(JSON.stringify(loadedNotes))
     } catch (err) {
         res.writeHead(500, {'Content-Type' : 'application/json'})
         res.end('Internal server error!')

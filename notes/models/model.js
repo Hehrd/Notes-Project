@@ -79,7 +79,7 @@ async function saveNote(text, type, username){
 
 async function loadNotes(username) {
     return new Promise((resolve, reject) => {
-        let sql = `SELECT * FROM notes WHERE username=${username}`
+        let sql = `SELECT * FROM notes WHERE username='${username}'`
         let query = db.query(sql, (err, results) => {
             if (err) {
                 reject(err)

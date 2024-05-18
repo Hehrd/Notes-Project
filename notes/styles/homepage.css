@@ -8,13 +8,17 @@ h1 {
     font-family: Arial, Helvetica, sans-serif;
 }
 header {
-    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 3px;
     position: sticky;
     top: 0px;
-    background-color: lawngreen;
-    border-bottom: solid black 3px;
+    background-color: rgba(126, 252, 0, 0.614);
+   border-bottom: solid black 2px;
 }
+
+
 .pfooter {
     font-size: 30px;
 }
@@ -27,22 +31,20 @@ footer {
     position: absolute;
     bottom: 0px;
     width: 100%;
-    background-color: lawngreen;
-    border-top: solid black 3px;
+    background-color:  rgba(126, 252, 0, 0.614);
+    border-top: solid black 2px;
 }
-
 .notesbox {
 	display: flex;
 	flex-direction:row;
     justify-content: center;
 }
-
 .dropzone {
 	width: 300px;
 	height: 350px;
 	margin: 20px;
 	background-color: lightgoldenrodyellow;
-    border: solid black 3px;    
+    border-radius: 20px;   
 }
 h2 {
     font-family: Arial, Helvetica, sans-serif;
@@ -50,21 +52,44 @@ h2 {
     text-align: center;
 }
 .note {
-	width: 180px;
-	height: 80px;
+	width: 200px;
+	height: 85px;
 	background-color:rgb(107, 205, 50);
-	border: 3px solid black;
-	border-radius: 15px;
+	border-radius: 20px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-    margin:3px;
+    margin-top: 15px;
+    margin-left: 5px;
 }
 #note input[type="text"] {
     width: 100%;
-    padding: 5px;
-    border-radius: 10px;
+    height: 25%;
+    padding: 7px;
+    border-radius: 15px;
     margin: 7px;
     font-size: 20px;
-    border: solid black 2px;
+    border: none;
+    background-color: rgb(207, 253, 162);
+    
+}
+.button {
+    background-color: lightgoldenrodyellow;
+    color: black;
+    padding: 15px 25px; 
+    text-decoration: none;
+    border: none;
+    border-radius: 25px; 
+    cursor: pointer; 
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px; 
+    position: fixed;
+    top: 15px;
+    margin-left: 20px;
+}   
+  .button:hover {
+    background-color: rgb(255, 255, 141);
+}
+  .button:active {
+    padding: 12px 22px; 
 }

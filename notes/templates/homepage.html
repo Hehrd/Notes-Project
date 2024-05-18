@@ -11,19 +11,19 @@
     <div id="newNotes-container">
         <div id="note0" class="note" draggable="true">
             <label>New note</label>
-            <input type="text" class="label" id="note-input" name="note" placeholder="New note">
+            <input type="text" class="note-input" id="note-input" name="note" placeholder="New note">
         </div>
     </div>
     <div class="notesbox">
-		<div id="drop-zone1" class="dropzone"><label>General:</label>   
-        </div>
-        <div id="drop-zone2" class="dropzone"><label>Pending:</label>
-        </div>
-        <div id="drop-zone3" class="dropzone"><label>Done:</label>
+		<div id="dropbox" class="dropbox"><label id="label" class="label">General:</label><div id="drop-zone1" class="dropzone">   
+        </div></div>
+        <div id="dropbox" class="dropbox"><label id="label" class="label">Pending:</label><div id="drop-zone2" class="dropzone">
+        </div></div>
+        <div id="dropbox" class="dropbox"><label id="label" class="label">Done:</label><div id="drop-zone3" class="dropzone"></div>
         </div>
        
 	</div>
-    <div id="drop-zone4" class="dropzone"><label>Delete Note:</label>
+    <div id="drop-zone4" class="del_note"><label id="label" class="label">Delete Note:</label>
     </div>
    
     <script src="../scripts/homepage.js" defer></script>

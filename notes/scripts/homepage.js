@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
 	xhr.open("POST", url, true);
 	xhr.setRequestHeader("Content-Type", "application/json");
+	xhr.setRequestHeader('sessionid', sessionStorage.getItem('notes_sessionID'))
 	xhr.onload = function () {
 		if (xhr.status === 200) {  // The server responded with a successful status
 			console.log('Success:', xhr.responseText);

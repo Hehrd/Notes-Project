@@ -8,6 +8,7 @@ function handleClick() {
 
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.setRequestHeader('sessionid', sessionStorage.getItem('notes_sessionID'))
     xhr.onload = function () {
         if (xhr.status === 200) {  // The server responded with a successful status
             sessionStorage.setItem('notes_sessionID', xhr.responseText)

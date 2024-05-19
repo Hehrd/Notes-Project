@@ -7,24 +7,23 @@
     <link rel="stylesheet" href="../styles/homepage.css">
 </head>
 <body>
-    <header><h1>Your Notes</h1></header>
+    <header><h1 class="Title">Your Notes</h1></header>
     <div id="newNotes-container">
         <div id="note0" class="note" draggable="true">
-            <label>New note</label>
-            <input type="text" id="note-input" placeholder="New note">
+            <label class="noteID">New note</label>
+            <textarea class="note-textarea" placeholder="New note"></textarea>
         </div>
     </div>
     <div class="notesbox">
-		<div id="drop-zone1" class="dropzone"><label>General:</label>   
-        </div>
-        <div id="drop-zone2" class="dropzone"><label>Pending:</label>
-        </div>
-        <div id="drop-zone3" class="dropzone"><label>Done:</label>
+		<div class="dropbox"><label class="type">General</label><div id="drop-zone1" class="dropzone">
+        </div></div>
+        <div class="dropbox"><label class="type">Pending</label><div id="drop-zone2" class="dropzone">
+        </div></div>
+        <div class="dropbox"><label class="type">Done</label><div id="drop-zone3" class="dropzone"></div>
         </div>
        
 	</div>
-    <div id="drop-zone4" class="dropzone"><label>Delete Note:</label>
-    </div>
+    <div id="drop-zone4" class="del_note"></div>
    
     <script src="../scripts/homepage.js" defer></script>
 </body>    

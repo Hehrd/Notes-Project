@@ -1,7 +1,7 @@
 const usernameInput = document.getElementById("username-input")
 const passwordInput = document.getElementById("password-input")
-const signupButton = document.getElementById("login-button")
-
+const loginButton = document.getElementById("login-button")
+const errorLabel = document.getElementById('error-label')
 function handleClick() {
     var xhr = new XMLHttpRequest();
     var url = "/login";
@@ -14,8 +14,12 @@ function handleClick() {
             sessionStorage.setItem('newNoteID', '0')
             console.log('Success:', xhr.responseText);
             window.location.href = '/homepage'
-        } else {
+        } else if (xhr.status === 401){
             console.log('Error:', xhr.status, xhr.statusText);
+            errorLabel.textContent = 'User not found!'
+        } else if (xhr.status === 422) {
+            console.log('Error:', xhr.status, xhr.statusText);
+            errorLabel.textContent = 'Insufficient data!'
         }
     }
 
@@ -23,8 +27,13 @@ function handleClick() {
         username: usernameInput.value,
         password: passwordInput.value
     };
-    var jsonData = JSON.stringify(data)
-    xhr.send(jsonData);
-}
+    if (data.username !== '' && data.username !== '') {
+        var jsonData = JSON.stringify(data)
+        xhr.send(jsonData);
+    } else {
+        console.log('Error:', 422, 'Insufficient data!')
+        errorLabel.textContent = 'Insufficient data!'
+    }
 
-signupButton.addEventListener("click", handleClick)
+}
+loginButton.addEventListener("click", handleClick)

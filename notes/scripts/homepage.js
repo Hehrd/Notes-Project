@@ -59,6 +59,7 @@ generalZone.addEventListener('drop', function(event) {
 	sessionStorage.setItem('newNoteID', String(Number(currID) + 1))
 	currID = sessionStorage.getItem('newNoteID')
 	generalZone.prepend(note)
+	// adjustDropZoneHeight('drop-zone1')
 	let labelText = note.querySelector('label').textContent
 	if (labelText === 'New note') {
 		sendCreateNewNoteRequest(1, note);
@@ -74,6 +75,7 @@ pendingZone.addEventListener('drop', function(event) {
 	sessionStorage.setItem('newNoteID', String(Number(currID) + 1))
 	currID = sessionStorage.getItem('newNoteID')
 	pendingZone.prepend(note)
+	// adjustDropZoneHeight('drop-zone2')
 	let labelText = note.querySelector('label').textContent
 	if (labelText === 'New note') {
 		 sendCreateNewNoteRequest(2, note);
@@ -87,6 +89,7 @@ doneZone.addEventListener('drop', function(event) {
 	sessionStorage.setItem('newNoteID', String(Number(currID) + 1))
 	currID = sessionStorage.getItem('newNoteID')
 	doneZone.prepend(note)
+	// adjustDropZoneHeight('drop-zone3')
 	let labelText = note.querySelector('label').textContent
 	if (labelText === 'New note') {
 		sendCreateNewNoteRequest(3, note);
@@ -100,8 +103,10 @@ deleteZone.addEventListener('drop', function(event) {
 	let note = selectedNote
 	let username = sessionStorage.getItem('notes_username')
 	let noteID = selectedNote.querySelector('label').textContent
-	sendDeleteNoteRequest(username, noteID)
-	selectedNote.remove()
+	if (noteID !== 'New note') {
+		sendDeleteNoteRequest(username, noteID)
+		selectedNote.remove()
+	}
 })
 
 function sendCreateNewNoteRequest(typeId, note) {
@@ -122,7 +127,7 @@ function sendCreateNewNoteRequest(typeId, note) {
 	var data = {
 		username: sessionStorage.getItem('notes_username'),
 		type: typeId,
-		text: note.querySelector('input').value
+		text: note.querySelector('textarea').value
 	};
 	var jsonData = JSON.stringify(data)
 	xhr.send(jsonData);
@@ -146,7 +151,7 @@ function sendUpdateNoteRequest(noteID, typeId, note) {
 		username: sessionStorage.getItem('notes_username'),
 		noteID: noteID,
 		type: typeId,
-		text: note.querySelector('input').value
+		text: note.querySelector('textarea').value
 	};
 	var jsonData = JSON.stringify(data)
 	xhr.send(jsonData);
@@ -158,9 +163,12 @@ function generateNewNote() {
 	newNoteDiv.setAttribute('class', 'note')
 	newNoteDiv.setAttribute('draggable', 'true')
 	let newNoteLabel = document.createElement('label')
-	let newNoteInput = document.createElement('input')
+	newNoteLabel.setAttribute('class', 'noteID')
+	let newNoteTextarea = document.createElement('textarea')
+	newNoteTextarea.setAttribute('class', 'note-textarea')
+	newNoteTextarea.setAttribute('placeholder', 'New note')
 	newNoteDiv.appendChild(newNoteLabel)
-	newNoteDiv.appendChild(newNoteInput)
+	newNoteDiv.appendChild(newNoteTextarea)
 	newNoteDiv.querySelector('label').textContent = 'New note'
 	newNoteDiv.addEventListener('dragstart', function (event) {
 		selectedNote = event.target
@@ -174,11 +182,14 @@ function generateLoadedNote(noteID, text, type) {
 	loadedNoteDiv.setAttribute('class', 'note')
 	loadedNoteDiv.setAttribute('draggable', 'true')
 	let loadedNoteLabel = document.createElement('label')
-	let loadedNoteInput = document.createElement('input')
+	loadedNoteLabel.setAttribute('class', 'noteID')
+	let loadedNoteTextarea = document.createElement('textarea')
+	loadedNoteTextarea.setAttribute('class', 'note-textarea')
+	loadedNoteTextarea.setAttribute('placeholder', 'New note')
 	loadedNoteDiv.appendChild(loadedNoteLabel)
-	loadedNoteDiv.appendChild(loadedNoteInput)
+	loadedNoteDiv.appendChild(loadedNoteTextarea)
 	loadedNoteDiv.querySelector('label').textContent = String(noteID)
-	loadedNoteDiv.querySelector('input').value = text
+	loadedNoteDiv.querySelector('textarea').value = text
 	loadedNoteDiv.addEventListener('dragstart', function (event) {
 		selectedNote = event.target
 	})
@@ -206,3 +217,12 @@ function sendDeleteNoteRequest(username, noteID) {
 	}
 	xhr.send();
 }
+
+// function adjustDropZoneHeight(dropZone) {
+// 	let dropZones = document.getElementsByClassName('dropzone')
+// 	dropZone.style.height = 'auto'
+// 	console.log(dropZone.)
+// 	for (let i = 0; i < dropZones.length; i++) {
+// 		dropZones[i].style.height = dropZone.style.height
+// 	}
+// }

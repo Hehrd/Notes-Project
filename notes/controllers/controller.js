@@ -1,16 +1,18 @@
 const Service = require("../models/model")
+const {validateCredentials} = require('../validators/validator')
 
 async function signup(req, res, credentials) {
     try {
         let username = credentials.username
         let password = credentials.password
-        let user = {
-            username: username,
-            password: password
+        if (validateCredentials(username, password)) {
+            await Service.saveUser(username, password)
+            res.writeHead(201, {'Content-Type': 'application/json'})
+            res.end("New user created!")
+        } else {
+            res.writeHead(422, {'Content-Type': 'application/json'})
+            res.end('Insufficient data!')
         }
-        await Service.saveUser(username, password)
-        res.writeHead(201, {'Content-Type': 'application/json'})
-        res.end("New user created!")
     } catch (error) {
         if (error.message === 'Username is already taken!') {
             res.writeHead(409, {'Content-Type': 'application/json'})
@@ -28,13 +30,14 @@ async function login(req, res, credentials){
     try {
         let username = credentials.username
         let password = credentials.password
-        let user = {
-            username: username,
-            password: password
+        if (username !== '' && password !== '') {
+            await Service.login(username, password)
+            res.writeHead(200, {'Content-Type': 'application/json'})
+            res.end("Login successful!")
+        } else {
+            res.writeHead(422, {'Content-Type': 'application/json'})
+            res.end('Insufficient data!')
         }
-        await Service.login(username, password)
-        res.writeHead(200, {'Content-Type': 'application/json'})
-        res.end("Login successful!")
     } catch (error) {
         if (error.message === 'Invalid username or password') {
             res.writeHead(401, {'Content-Type': 'application/json'})

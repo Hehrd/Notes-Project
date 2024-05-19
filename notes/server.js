@@ -27,7 +27,9 @@ const server = http.createServer((req, res) => {
         })
         req.on('end', () => {
             let parsedData = JSON.parse(body)
-            signup(req, res, parsedData)
+            if (parsedData.username !== '' || parsedData.password !== ''){
+                signup(req, res, parsedData)
+            }
         })
     } else if (req.url === '/login' && req.method === 'POST') {
         changePage = ''
@@ -38,7 +40,7 @@ const server = http.createServer((req, res) => {
         })
         req.on('end', () => {
             let parsedData = JSON.parse(body)
-            login(req, res, parsedData)
+                login(req, res, parsedData)
         })
     } else if (req.url === '/createnote' && req.method === 'POST') {
         changePage = ''

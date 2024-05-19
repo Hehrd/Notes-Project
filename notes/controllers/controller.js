@@ -5,7 +5,8 @@ async function signup(req, res, credentials) {
     try {
         let username = credentials.username
         let password = credentials.password
-        if (validateCredentials(username, password)) {
+        let validation = await validateCredentials(username, password)
+        if (validation === true) {
             await Service.saveUser(username, password)
             res.writeHead(201, {'Content-Type': 'application/json'})
             res.end("New user created!")
@@ -30,7 +31,8 @@ async function login(req, res, credentials){
     try {
         let username = credentials.username
         let password = credentials.password
-        if (username !== '' && password !== '') {
+        let validation = validateCredentials(username, password)
+        if (validation === true) {
             await Service.login(username, password)
             res.writeHead(200, {'Content-Type': 'application/json'})
             res.end("Login successful!")

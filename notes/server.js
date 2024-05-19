@@ -12,7 +12,9 @@ const server = http.createServer((req, res) => {
     let filePath =  '.' + req.url
     let sql
     let changePage = 'change'
-    if (req.url === '/signup' && req.method === 'GET') {
+    if (req.url === '/notes' && req.method === 'GET') {
+        filePath = "./templates/index.html"
+    } else if (req.url === '/signup' && req.method === 'GET') {
         filePath = "./templates/signup.html"
     } else if (req.url === '/login' && req.method === 'GET') {
         filePath = "./templates/login.html"

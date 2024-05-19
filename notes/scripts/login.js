@@ -10,6 +10,7 @@ function handleClick() {
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.onload = function () {
         if (xhr.status === 200) {  // The server responded with a successful status
+            sessionStorage.setItem('notes_sessionID', xhr.responseText)
             sessionStorage.setItem('notes_username', `${usernameInput.value}`)
             sessionStorage.setItem('newNoteID', '0')
             console.log('Success:', xhr.responseText);

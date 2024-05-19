@@ -115,6 +115,7 @@ function sendCreateNewNoteRequest(typeId, note) {
 
 	xhr.open("POST", url, true);
 	xhr.setRequestHeader("Content-Type", "application/json");
+	xhr.setRequestHeader("sessionID", sessionStorage.getItem('notes_sessionID'));
 	xhr.onload = function () {
 		if (xhr.status === 201) {  // The server responded with a successful status
 			console.log('Success:', xhr.responseText);

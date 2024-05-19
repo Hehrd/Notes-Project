@@ -120,6 +120,9 @@ function sendCreateNewNoteRequest(typeId, note) {
 		if (xhr.status === 201) {  // The server responded with a successful status
 			console.log('Success:', xhr.responseText);
 			note.querySelector('label').textContent = xhr.responseText
+		} else if (xhr.status === 440) {
+			console.log('Error:', xhr.status, xhr.statusText);
+			window.location.href = '/notes'
 		} else {
 			console.log('Error:', xhr.status, xhr.statusText);
 		}
@@ -143,6 +146,9 @@ function sendUpdateNoteRequest(noteID, typeId, note) {
 	xhr.onload = function () {
 		if (xhr.status === 200) {  // The server responded with a successful status
 			console.log('Success:', xhr.responseText);
+		} else if (xhr.status === 440) {
+			console.log('Error:', xhr.status, xhr.statusText);
+			window.location.href = '/notes'
 		} else {
 			console.log('Error:', xhr.status, xhr.statusText);
 		}
@@ -212,6 +218,9 @@ function sendDeleteNoteRequest(username, noteID) {
 	xhr.onload = function () {
 		if (xhr.status === 200) {  // The server responded with a successful status
 			console.log('Success:', xhr.responseText);
+		} else if (xhr.status === 440) {
+			console.log('Error:', xhr.status, xhr.statusText);
+			window.location.href = '/notes'
 		} else {
 			console.log('Error:', xhr.status, xhr.statusText);
 		}

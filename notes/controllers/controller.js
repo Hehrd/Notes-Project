@@ -87,31 +87,45 @@ async function createNewNote(req, res, contents){
 
 async function loadNotes(req, res, username) {
     try {
+        handleSessionID(req.headers['sessionid'])
         let loadedNotes = await Service.loadNotes(username)
         res.writeHead(200, {'Content-Type' : 'application/json'})
         res.end(JSON.stringify(loadedNotes))
     } catch (err) {
-        res.writeHead(500, {'Content-Type' : 'application/json'})
-        res.end('Internal server error!')
+        if (err.message === 'Session expired!') {
+            res.writeHead(440, {'Content-Type' : 'application/json'})
+            res.end(err.message)
+        } else {
+            res.writeHead(500, {'Content-Type' : 'application/json'})
+            res.end('Internal server error!')
+        }
     }
 
 }
 
 async function deleteNote(req, res, noteData){
     try {
+        handleSessionID(req.headers['sessionid'])
         let username = noteData.username
         let noteID = noteData.noteID
         await Service.deleteNote(username, Number(noteID))
         res.writeHead(200, {'Content-Type' : 'application/json'})
         res.end('Note successfully deleted!')
     } catch (err) {
-        res.writeHead(500, {'Content-Type' : 'application/json'})
-        res.end('Internal server error!')
+        if (err.message === 'Session expired!') {
+            res.writeHead(440, {'Content-Type' : 'application/json'})
+            res.end(err.message)
+        } else {
+            res.writeHead(500, {'Content-Type' : 'application/json'})
+            res.end('Internal server error!')
+        }
+
     }
 }
 
 async function updateNote(req, res, contents){
     try {
+        handleSessionID(req.headers['sessionid'])
         let text = contents.text
         let type = JSON.parse(contents.type)
         let noteID = JSON.parse(contents.noteID)
@@ -120,7 +134,10 @@ async function updateNote(req, res, contents){
         res.writeHead(200, {'Content-Type' : 'application/json'})
         res.end('Note successfully updated!')
     } catch (err) {
-        if (err.message === "Note doesn't exist!") {
+        if (err.message === 'Session expired!') {
+            res.writeHead(440, {'Content-Type' : 'application/json'})
+            res.end(err.message)
+        } else if (err.message === "Note doesn't exist!") {
             res.writeHead(404, {'Content-Type' : 'application/json'})
             res.end(err.message)
         } else {
